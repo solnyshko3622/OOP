@@ -26,6 +26,8 @@ public interface Graph<G> {
     ArrayList<Vertex<G>> getVertices();
 
     Integer findId(G vert);
+
+    int getCountEdge();
 }
 
 

@@ -12,6 +12,7 @@ public class AdjacencyLists<G> implements Graph<G> {
 
     private ArrayList<ArrayList<Edge<G>>> edgesName;
     private int vertexCount;
+    private int edgesCount;
     private ArrayList<Vertex<G>> vertices;
 
     /**
@@ -21,6 +22,11 @@ public class AdjacencyLists<G> implements Graph<G> {
         edgesName = new ArrayList<ArrayList<Edge<G>>>();
         vertexCount = 0;
         vertices = new ArrayList<Vertex<G>>();
+        edgesCount = 0;
+    }
+
+    public int getCountEdge() {
+        return edgesCount;
     }
 
     /**
@@ -101,6 +107,7 @@ public class AdjacencyLists<G> implements Graph<G> {
         if (indexVert2 == - 1) {
             addVert(vert2);
         }
+        edgesCount++;
     }
 
     /**
@@ -161,6 +168,7 @@ public class AdjacencyLists<G> implements Graph<G> {
         }
         //если не нашли такое ребро, создаём
         addEdge(vert1, vert2, newEdge);
+        edgesCount++;
     }
 
     /**
@@ -189,6 +197,7 @@ public class AdjacencyLists<G> implements Graph<G> {
                 return;
             }
         }
+        edgesCount--;
     }
 
     /**

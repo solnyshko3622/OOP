@@ -338,5 +338,40 @@ class GraphTest {
         assertEquals(7, sort.getWay(adL, 3));
     }
 
+    @Test
+    void bellmanFord() {
+        AdjacencyMatrix<Integer> adL = new AdjacencyMatrix<>();
+        adL.addEdge(1, 2, 3);
+        adL.addEdge(2, 3, 4);
+        adL.addEdge(1, 3, 10);
+        FindWay<Integer> sort = new FindWay<>(1, adL);
+        sort.bellmanFord(adL, 1, 3);
+        assertEquals(7, sort.bellmanFord(adL, 1, 3));
+    }
+
+    @Test
+    void bellmanFordNegativeCycle() {
+        AdjacencyMatrix<Integer> adL = new AdjacencyMatrix<>();
+        adL.addEdge(1, 2, 3);
+        adL.addEdge(2, 3, 4);
+        adL.addEdge(1, 3, 10);
+        adL.addEdge(3, 4, -8);
+        adL.addEdge(4, 1, -10);
+        FindWay<Integer> sort = new FindWay<>(1, adL);
+        sort.bellmanFord(adL, 1, 3);
+        assertEquals(-1, sort.bellmanFord(adL, 1, 3));
+    }
+
+
+    @Test
+    void bellmanFordNegativeEdge() {
+        AdjacencyMatrix<Integer> adL = new AdjacencyMatrix<>();
+        adL.addEdge(1, 2, -2);
+        adL.addEdge(2, 3, 5);
+        adL.addEdge(1, 3, 7);
+        FindWay<Integer> sort = new FindWay<>(1, adL);
+        sort.bellmanFord(adL, 1, 3);
+        assertEquals(3, sort.bellmanFord(adL, 1, 3));
+    }
 
 }

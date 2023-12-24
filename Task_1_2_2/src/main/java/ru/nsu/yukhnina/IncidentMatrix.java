@@ -227,4 +227,8 @@ public class IncidentMatrix<G> implements Graph<G> {
     public ArrayList<Vertex<G>> getVertices() {
         return verticesName;
     }
+
+    public int getCountEdge() {
+        return countEdge;
+    }
 }

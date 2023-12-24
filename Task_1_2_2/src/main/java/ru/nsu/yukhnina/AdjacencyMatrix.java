@@ -11,6 +11,7 @@ public class AdjacencyMatrix<G> implements Graph<G> {
     private List<ArrayList<Integer>> warshall;
     private ArrayList<Vertex<G>> verticesName;
     private int countVert;
+    private int countEdge;
 
     /**
      * On MATRIX(i, j) фыves null or object edge.
@@ -20,6 +21,11 @@ public class AdjacencyMatrix<G> implements Graph<G> {
         verticesName = new ArrayList<Vertex<G>>();
         countVert = 0;
         warshall = new ArrayList<ArrayList<Integer>>();
+        countEdge = 0;
+    }
+
+    public int getCountEdge() {
+        return countEdge;
     }
 
     public int getCountVert() {
@@ -86,6 +92,7 @@ public class AdjacencyMatrix<G> implements Graph<G> {
             indexVert2 = this.countVert - 1;
         }
         matrix.get(indexVert1).set(indexVert2, new Edge<G>(vert1, vert2, newEdge));
+        countEdge++;
     }
 
     /**
@@ -112,6 +119,7 @@ public class AdjacencyMatrix<G> implements Graph<G> {
         }
         //удаление
         matrix.get(indexVert1).set(indexVert2, null);
+        countEdge--;
     }
 
     /**

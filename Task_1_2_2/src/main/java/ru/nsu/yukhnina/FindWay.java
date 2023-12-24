@@ -1,6 +1,7 @@
 package ru.nsu.yukhnina;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * класс, использующий граф для поиска путей между вершинами.
@@ -58,6 +59,55 @@ public class FindWay<G> {
                 }
             }
         }
+    }
+
+    /**
+     * Bellman-Ford alghoritm to find shortly way.
+     */
+    public int bellmanFord(Graph<G> graph, G vert, G vert2) {
+        int src = graph.findId(vert);
+        int verticesCount = graph.getVertices().size();
+        int[] dist = new int[verticesCount];
+
+        // Step 1: Initialize distances from src to all
+        // other vertices as INFINITE
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+
+        // Step 2: Relax all edges |verticesCount| - 1 times. A simple
+        // shortest path from src to any other vertex can
+        // have at-most |verticesCount| - 1 edges
+        int weight;
+        for (int i = 1; i < verticesCount; ++i) {
+            for (int j = 0; j < verticesCount; ++j) {
+                for (int k = 0; k < verticesCount; k++) {
+                    Edge<G> edge = graph.getEdge(graph.getVertices().get(j).getVert(),
+                            graph.getVertices().get(k).getVert());
+                    if (edge != null) {
+                        weight = (int) edge.getWeight();
+                        if (dist[j] != Integer.MAX_VALUE && dist[j] + weight < dist[k]) {
+                            dist[k] = dist[j] + weight;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int j = 0; j < verticesCount; j++) {
+            for (int k = 0; k < verticesCount; k++) {
+                Edge<G> edge = graph.getEdge(graph.getVertices().get(j).getVert(),
+                        graph.getVertices().get(k).getVert());
+                if (edge != null) {
+                    weight = (int) edge.getWeight();
+                    if (dist[j] != Integer.MAX_VALUE && dist[j] + weight < dist[k]) {
+                        dist[k] = dist[j] + weight;
+                        System.out.println("negative cycle");
+                        return -1;
+                    }
+                }
+            }
+        }
+        return dist[graph.findId(vert2)];
     }
 
     public Integer getWay(Graph<G> g, G vert2) {
